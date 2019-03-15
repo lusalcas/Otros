@@ -1,0 +1,101 @@
+####################################################################################################
+install.packages("forecast")
+install.packages("tseries")
+library(forecast)
+library(tseries)
+
+help(arima)
+
+###
+library(readxl)
+
+ejemplo1 <- read_excel("C:/Users/ALUMNO-D14/Documents/R/ar.xlsx")
+ejemplo1.ts <- ts(ejemplo1, 1)
+
+par(mfrow=c(1,2))
+acf(ejemplo1.ts)
+pacf(ejemplo1.ts)
+
+adf.test(ejemplo1.ts)
+
+fit1 <- arima(ejemplo1.ts, order=c(1,0,0))
+fit2 <- arima(ejemplo1.ts, order=c(2,0,0))
+fit3 <- arima(ejemplo1.ts, order=c(3,0,0))
+
+par(mfrow=c(1,3))
+plot(forecast(fit1))
+plot(forecast(fit2))
+plot(forecast(fit3))
+
+summary(fit1)
+summary(fit2)
+summary(fit3)
+
+
+ ###
+library(readxl)
+
+ejemplo1 <- read_excel("G://clases//time-series//topics//data//ar1.xlsx")
+ejemplo1.ts <- ts(ejemplo1, 1)
+
+acf(ejemplo1.ts$yt)
+adf.test(ejemplo1.ts$yt)
+
+fit1 <- arima(ejemplo1.ts[,1], order=c(1,0,0))
+fit2 <- arima(ejemplo1.ts[,1], order=c(2,0,0))
+fit3 <- arima(ejemplo1.ts[,1], order=c(3,0,0))
+
+par(mfrow=c(1,3))
+plot(forecast(fit1))
+plot(forecast(fit2))
+plot(forecast(fit3))
+
+summary(fit1)
+summary(fit2)
+summary(fit3)
+
+
+ejemplo2 <- read_excel("F://clases//time-series//clases//data//ar2.xlsx")
+ejemplo2.ts <- ts(ejemplo2)
+
+fit4 <- Arima(diff(ejemplo2.ts), order=c(1,0,0))
+fit5 <- Arima(diff(ejemplo2.ts), order=c(2,0,0))
+fit6 <- Arima(diff(ejemplo2.ts), order=c(3,0,0))
+
+par(mfrow=c(1,3))
+plot(forecast(fit4))
+plot(forecast(fit5))
+plot(forecast(fit6))
+
+summary(fit4)
+summary(fit5)
+summary(fit6)
+
+
+
+##Otra funcion 
+help(Arima)
+help(arima)
+
+
+library(readxl)
+ejemplo2 <- read_excel("F://clases//time-series//topics//data//ar2.xlsx")
+ejemplo2.ts <- ts(ejemplo2)
+
+ma1 <- Arima(diff(ejemplo2.ts), order=c(0,0,1))
+ma2 <- Arima(diff(ejemplo2.ts), order=c(0,0,2))
+ma3 <- Arima(diff(ejemplo2.ts), order=c(0,0,3))
+
+par(mfrow=c(1,3))
+plot(forecast(ma1))
+plot(forecast(ma2))
+plot(forecast(ma3))
+
+summary(ma1)
+summary(ma2)
+summary(ma3)
+
+
+help(Arima)
+help(arima)
+
