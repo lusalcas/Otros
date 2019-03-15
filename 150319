@@ -1,0 +1,46 @@
+install.packages("foreign")
+install.packages("readxl")
+
+require(foreign)
+library(readxl)
+ejemplo1 <- read_excel("C:/Users/ALUMNO-D14/Downloads/arima_est2.xlsx")
+
+ejemplo.ts <- ts(ejemplo1) ## ts es para decir que es un proceso temporal
+
+##Grafico
+plot(ejemplo.ts, ylab="Proceso", xlab="Periodo", col="blue")
+ acf(ejemplo.ts, ylab="Proceso", xlab="Periodo", col="pink")
+ 
+ #El gràfico muestra una tendencia por ende no es estacionario
+ #primero diferenciqmos para intentar modificar las medias que claramente se ven no constantes
+ 
+ par(mfrow=c(2,3))
+ plot(diff(ejemplo.ts),ylab=" Primeras diferencias", xlab="Periodo", col="red")  
+ plot(log(ejemplo.ts),ylab=" log", xlab="Periodo", col="red")
+ plot(diff(log(ejemplo.ts)),ylab=" Primeras diferencias y log", xlab="Periodo", col="red") 
+ 
+ par(mfrow=c(1,2))
+ 
+ acf(diff(ejemplo.ts),ylab=" Primeras diferencias", xlab="Periodo", col="red")  
+ acf(log(ejemplo.ts),ylab=" log", xlab="Periodo", col="red")  
+ 
+ 
+ acf(diff(log(ejemplo.ts)),ylab=" Primeras diferencias y log", xlab="Periodo", col="red")  
+ pacf(diff(log(ejemplo.ts)),ylab=" Primeras diferencias y log", xlab="Periodo", col="red")  
+ 
+ 
+ modelo1 <-arima(ejemplo.ts, order=c(1,1,1))  
+ summary(modelo1)
+ 
+ modeloprueba<-arima(ejemplo.ts, order=c(1,2,1))  
+ summary(modeloprueba)
+ 
+   
+ 
+ 
+   
+ 
+
+ library(tseries)
+ adf.test(diff(ejemplo.ts)) 
+ #no es estacionario por df pvalue>df entoces rechazamos ha y aceptamos h0
